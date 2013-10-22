@@ -1845,12 +1845,24 @@ const Rect* screen_physical_area_primary(gboolean fixed)
 
 void screen_set_root_cursor(void)
 {
-    if (sn_app_starting())
+    int rc=0;
+
+    if (sn_app_starting()) {
+        /* Albert - disable desktop mouse / keyboard events */
+        rc = XGrabPointer (obt_display, obt_root(ob_screen),
+                           FALSE, 0, GrabModeAsync, GrabModeAsync, None,
+                           ob_cursor(OB_CURSOR_BUSYPOINTER), CurrentTime);
+        
         XDefineCursor(obt_display, obt_root(ob_screen),
                       ob_cursor(OB_CURSOR_BUSYPOINTER));
-    else
+    }
+    else {
+        /* Albert - re-enable desktop mouse / keyboard events */
+        rc = XUngrabPointer (obt_display, CurrentTime);
+
         XDefineCursor(obt_display, obt_root(ob_screen),
                       ob_cursor(OB_CURSOR_POINTER));
+    }
 }
 
 guint screen_find_monitor_point(guint x, guint y)
