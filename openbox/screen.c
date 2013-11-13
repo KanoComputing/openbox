@@ -40,6 +40,8 @@
 #include "obt/prop.h"
 
 #include <X11/Xlib.h>
+#include <X11/extensions/XInput2.h>
+#include <X11/extensions/XInput2.h>
 #ifdef HAVE_UNISTD_H
 #  include <sys/types.h>
 #  include <unistd.h>
@@ -1847,21 +1849,24 @@ void screen_set_root_cursor(void)
 {
     int rc=0;
 
+    int pointer_id;
+    if (!XIGetClientPointer(obt_display, None, &pointer_id))
+        return;
     if (sn_app_starting()) {
         /* Albert - disable desktop mouse / keyboard events */
         rc = XGrabPointer (obt_display, obt_root(ob_screen),
                            FALSE, 0, GrabModeAsync, GrabModeAsync, None,
                            ob_cursor(OB_CURSOR_BUSYPOINTER), CurrentTime);
         
-        XDefineCursor(obt_display, obt_root(ob_screen),
-                      ob_cursor(OB_CURSOR_BUSYPOINTER));
+        XIDefineCursor(obt_display, pointer_id, obt_root(ob_screen),
+                       ob_cursor(OB_CURSOR_BUSYPOINTER));
     }
     else {
         /* Albert - re-enable desktop mouse / keyboard events */
         rc = XUngrabPointer (obt_display, CurrentTime);
 
-        XDefineCursor(obt_display, obt_root(ob_screen),
-                      ob_cursor(OB_CURSOR_POINTER));
+        XIDefineCursor(obt_display, pointer_id, obt_root(ob_screen),
+                       ob_cursor(OB_CURSOR_POINTER));
     }
 }
 
