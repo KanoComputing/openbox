@@ -1,3 +1,11 @@
+openbox (3.5.2-4~kano.1) unstable; urgency=low
+
+  * Rebuilding for armv6hf
+  * Adding a dependency on libxcursor1
+  * Tagging the package version to KANO
+
+ -- Team Kano <hello@kano.me>  Wed, 13 Nov 2013 10:02:27 +0000
+
 openbox (3.5.2-4) unstable; urgency=low
 
   * Patch working:
