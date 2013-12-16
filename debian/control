@@ -1,7 +1,7 @@
 Source: openbox
 Section: x11
 Priority: optional
-Maintainer: Team Kano <radek@kano.me>
+Maintainer: Team Kano <dev@kano.me>
 Build-Depends: debhelper (>= 9), gettext, libstartup-notification0-dev, 
  libxrender-dev, pkg-config, libglib2.0-dev, libxml2-dev (>= 2.6.0), perl, 
  libxt-dev, libxinerama-dev, libxrandr-dev, libpango1.0-dev, libx11-dev, 
